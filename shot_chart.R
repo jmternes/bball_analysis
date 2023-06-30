@@ -1,3 +1,5 @@
+# Thanks to Dom Samangy for the tutorial - https://youtu.be/Af7g95-g4y8?t=329
+
 install.packages("ggplot2")
 install.packages("ggthemes")
 install.packages("ggplot2movies")
@@ -167,7 +169,6 @@ plot_court = function(court_theme = court_themes$light, use_short_three = FALSE)
             legend.text = element_text(size = rel(1.0))
         )
 
-        # stopping point - https://youtu.be/Af7g95-g4y8?t=329
 }
 
 nets <- teams_shots(teams = "Brooklyn Nets", seasons = 2021, season_types = "Regular Season")
