@@ -169,3 +169,40 @@ plot_court = function(court_theme = court_themes$light, use_short_three = FALSE)
 
         # stopping point - https://youtu.be/Af7g95-g4y8?t=329
 }
+
+nets <- teams_shots(teams = "Brooklyn Nets", seasons = 2021, season_types = "Regular Season")
+
+# filter shot data for player & clean data to fit court dimensions
+
+durant <- nets %>%
+    filter(namePlayer = "Kevin Durant") %>%
+    mutate(x = as.numeric(as.character(locationX)) / 10, y = as.numeric(as.character(locationY)) / 10 + hoop_center_y)
+
+# horizontally flip the data
+
+durant$x <- durant$x * -1
+
+# filter shots by game date
+
+final_durant = durant %>% filter(dateGame == 20210502)
+
+# plotting
+
+p1 <- plot_court(court_theme$ppt, use_short_three = F) +
+    geom_point(data = final_durant, aes(x = x, y = y, color = final_durant$isShotMade, fill = final_durant$isShotMade),
+        size = 3, shape = 21, stroke = .5) +
+    scale_color_manual(values = c("green4", "red3"), aesthetics = "color", breaks = c("TRUE", "FALSE"), labels = c("Made", "Missed")) +
+    scale_fill_manual(values = c("green2", "gray20"), aesthetics = "fill", breaks = c("TRUE", "FALSE"), labels = c("Made", "Missed")) +
+    scale_x_continuous(limits - c(-27.5, 27.5)) +
+    scale_y_continuous(limits = c(0, 45)) +
+    theme(plot.title = element_text(hjust = .5, size = 22, family = "Comic Sans MS", face = "bold", vjust = -4),
+          plot.subtitle = element_text(hjust = .5, size = 10, family = "Comic Sans MS", face = "bold", vjust = -8),
+          legend.position = c(.5, .85),
+          legend.direction = "horizontal",
+          legend.title = element_blank(),
+          legend.text = element_text(hjust = .5, size = 10, family = "Comic Sans MS", face = "bold", color = "white")) +
+    ggtitle(label = "Kevin Durant vs. Milwaukee Bucks", subtitle = "30 PTS | 4 REB | 7-13 3PT - 5/2/21")
+
+ggdraw(p1) + theme(plot.background = element_rect(fill = "gray20", color = NA))
+
+#ggsave("Durant.png", height = 6, width = 6, dpi = 300)
