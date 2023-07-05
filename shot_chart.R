@@ -3,6 +3,7 @@
 install.packages("ggplot2")
 install.packages("ggthemes")
 install.packages("ggplot2movies")
+install.packages("jsonlite", dependencies=TRUE, repos='http://cran.rstudio.com/')
 
 library(ggplot2)
 library(ggthemes)
@@ -206,4 +207,4 @@ p1 <- plot_court(court_theme$ppt, use_short_three = F) +
 
 ggdraw(p1) + theme(plot.background = element_rect(fill = "gray20", color = NA))
 
-#ggsave("Durant.png", height = 6, width = 6, dpi = 300)
+ggsave("Durant.png", height = 6, width = 6, dpi = 300)
